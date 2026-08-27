@@ -1,0 +1,37 @@
+#!/bin/bash
+
+set -euo pipefail
+
+echo "=== run install Fedora packages ==="
+
+if ! command -v dnf >/dev/null 2>&1; then
+    echo "dnf not found. Skipping."
+    exit 0
+fi
+
+packages=(
+{{- range .packages.fedora.dnf }}
+    {{ . | quote }}
+{{- end }}
+{{- range .packages.fedora.copr }}
+{{- range .packages }}
+    {{ . | quote }}
+{{- end }}
+{{- end }}
+)
+
+if [ "${#packages[@]}" -eq 0 ]; then
+    echo "No Fedora packages configured. Skipping."
+    exit 0
+fi
+
+{{- if .packages.fedora.copr }}
+sudo dnf install -y dnf-plugins-core
+
+{{- range .packages.fedora.copr }}
+echo "Enabling COPR repository {{ .repository }}"
+sudo dnf copr enable -y {{ .repository | quote }}
+{{- end }}
+{{- end }}
+
+sudo dnf install -y "${packages[@]}"

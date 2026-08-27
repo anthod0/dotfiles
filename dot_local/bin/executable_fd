@@ -1,0 +1,5 @@
+#!/bin/sh
+exec /usr/bin/fd \
+	--no-ignore \
+	--ignore-file "$HOME/.config/fd/ignore" \
+	"$@"

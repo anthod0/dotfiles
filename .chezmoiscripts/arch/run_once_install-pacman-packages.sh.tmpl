@@ -1,0 +1,23 @@
+#!/bin/bash
+
+set -euo pipefail
+
+echo "=== run install pacman packages ==="
+
+if ! command -v pacman >/dev/null 2>&1; then
+    echo "pacman not found. Skipping."
+    exit 0
+fi
+
+packages=(
+{{- range .packages.arch.pacman }}
+    {{ . | quote }}
+{{- end }}
+)
+
+if [ "${#packages[@]}" -eq 0 ]; then
+    echo "No pacman packages configured. Skipping."
+    exit 0
+fi
+
+sudo pacman -S --needed --noconfirm "${packages[@]}"

@@ -1,0 +1,33 @@
+-- 剪贴板 SSH ：经 OSC 52 把 yank 送到本地剪贴板
+if vim.env.SSH_CONNECTION and vim.env.SSH_CONNECTION ~= "" then
+  vim.opt.clipboard = "unnamedplus"
+  local osc52 = require("vim.ui.clipboard.osc52")
+  vim.g.clipboard = {
+    name = "OSC 52",
+    copy = {
+      ["+"] = osc52.copy("+"),
+      ["*"] = osc52.copy("*"),
+    },
+    paste = {
+      ["+"] = osc52.paste("+"),
+      ["*"] = osc52.paste("*"),
+    },
+  }
+{{ if not (contains "microsoft" (lower .chezmoi.kernel.osrelease)) -}}
+elseif vim.env.WAYLAND_DISPLAY and vim.env.WAYLAND_DISPLAY ~= "" and vim.fn.executable("wl-copy") == 1 then
+  -- 本地 Wayland：直连 wl-clipboard
+  vim.opt.clipboard = "unnamedplus"
+  vim.g.clipboard = {
+    name = "wl-clipboard",
+    copy = {
+      ["+"] = "wl-copy --type text/plain",
+      ["*"] = "wl-copy --primary --type text/plain",
+    },
+    paste = {
+      ["+"] = "wl-paste --no-newline",
+      ["*"] = "wl-paste --no-newline --primary",
+    },
+    cache_enabled = true,
+  }
+{{ end -}}
+end

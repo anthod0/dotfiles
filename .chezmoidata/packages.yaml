@@ -1,0 +1,67 @@
+packages:
+  arch:
+    pacman:
+      - git
+      - github-cli
+      - jq
+      - fzf
+      - ripgrep
+      - fd
+      - eza
+      - bat
+      - fish
+      - neovim
+      - uv
+      - ffmpeg
+      - imagemagick
+      - file
+      - 7zip
+      - poppler
+      - resvg
+      - starship
+      - glow
+      - btop
+      - lazygit
+      - zoxide
+      - yazi
+      - git-delta
+      - less
+      - wl-clipboard
+      - tmux
+  fedora:
+    dnf:
+      - git
+      - gh
+      - jq
+      - fzf
+      - ripgrep
+      - fd-find
+      - eza
+      - bat
+      - fish
+      - neovim
+      - vim
+      - uv
+      - ffmpeg
+      - ImageMagick
+      - file
+      - 7zip
+      - poppler-utils
+      - glow
+      - btop
+      - zoxide
+      - git-delta
+      - less
+      - wl-clipboard
+      - tmux
+    copr:
+      - repository: atim/starship
+        packages:
+          - starship
+      - repository: dejan/lazygit
+        packages:
+          - lazygit
+      - repository: lihaohong/yazi
+        packages:
+          - yazi
+          - resvg

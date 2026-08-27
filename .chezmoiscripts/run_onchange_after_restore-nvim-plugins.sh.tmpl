@@ -1,0 +1,13 @@
+#!/bin/bash
+
+set -euo pipefail
+
+# Re-run when the Lazy lockfile changes: {{ include "private_dot_config/exact_nvim/lazy-lock.json" | sha256sum }}
+
+if ! command -v nvim >/dev/null 2>&1; then
+    echo "nvim is required to restore Lazy plugins." >&2
+    exit 1
+fi
+
+echo "=== restore nvim plugins from lazy-lock.json ==="
+nvim --headless "+Lazy! restore" +qa

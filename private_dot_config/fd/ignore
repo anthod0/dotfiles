@@ -1,0 +1,38 @@
+# Version control
+.git/
+
+# JavaScript / TypeScript
+node_modules/
+dist/
+coverage/
+.next/
+.svelte-kit/
+.turbo/
+.vite/
+.nuxt/
+.output/
+out/
+.pnpm-store/
+.yarn/cache/
+
+# Rust / JVM / native builds
+target/
+build/
+.gradle/
+cmake-build-*/
+
+# Python
+.venv/
+venv/
+__pycache__/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+
+# General caches
+.cache/
+
+# Local architecture and research files must remain discoverable
+!.scratch/
+!.scratch/**

@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+hostname=$(uname -n 2>/dev/null || printf '')
+
+case "${hostname:0:1}" in
+  a | A) printf '' ;;
+  b | B) printf '' ;;
+  c | C) printf '󱙳' ;;
+  d | D) printf '󰣘' ;;
+  e | E) printf '󱁂' ;;
+  *)     printf '' ;;
+esac

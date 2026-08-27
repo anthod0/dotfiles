@@ -1,0 +1,6 @@
+.pi/
+.claude/
+.codex/
+.fdignore
+/TODO.md
+/docs/product-intel/

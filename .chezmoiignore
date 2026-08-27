@@ -1,0 +1,6 @@
+{{- if ne .chezmoi.osRelease.id "arch" }}
+.chezmoiscripts/arch/**
+{{- end }}
+{{- if ne .chezmoi.osRelease.id "fedora" }}
+.chezmoiscripts/fedora/**
+{{- end }}
