@@ -1,3 +1,6 @@
+README.md
+LICENSE
+
 {{- if ne .chezmoi.osRelease.id "arch" }}
 .chezmoiscripts/arch/**
 {{- end }}
