@@ -1,7 +1,7 @@
 ".agents/skills":
   type: git-repo
   url: https://github.com/anthod0/skills.git
-  refreshPeriod: 168h
+  refreshPeriod: 24h
   pull:
     args:
       - --ff-only
