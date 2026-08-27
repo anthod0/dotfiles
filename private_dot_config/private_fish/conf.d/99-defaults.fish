@@ -24,9 +24,6 @@ if status is-interactive
     zoxide init fish | source
 end
 
-bind f2 accept-autosuggestion
-bind f3 forward-word
-
 set -gx EDITOR vim
 set -gx VISUAL vim
 
