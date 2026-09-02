@@ -4,26 +4,24 @@
 - fd
 - jq
 
-# Package Management
-
-TypeScript/JavaScript 项目使用 **pnpm** 或 **bun** 作为包管理器，**禁止使用 npm**。
-
-- 根据项目中已有的 lockfile 判断：`pnpm-lock.yaml` → pnpm，`bun.lockb` / `bun.lock` → bun。
-- 如果没有 lockfile，优先使用 pnpm。
-- 添加依赖使用 `pnpm add <pkg>` 或 `bun add <pkg>`，不要手动编辑 `package.json`。
-- pnpm monorepo 使用 `pnpm --filter <package_name> add <pkg>`。
-
 # Rules
+- Do not proactively reply to issues or submit PRs unless explicitly requested by the user.
+- Do not take overly destructive actions. Anything that deletes data or modifies shared or production systems still needs explicit user confirmation.
+- Prefer planning over execution. Always break down complex tasks and seek feedback on your roadmap first. Consider confirming the roadmap first to ensure alignment before execution.
 
-- Review termination — Run at most one code-review round per implementation task unless the user explicitly requests another. A review round may include multiple parallel review axes or agents.
-- After the review, consolidate all findings, fix actionable issues, and rerun the relevant tests and verification. Do not invoke code-review again merely because the review fixes changed the diff.
-- If review-driven fixes materially expand the original scope or leave significant uncertainty, stop after verification and report the residual risks to the user instead of starting another review round.
-- 不要主动回复Issue, 提交 PR, 除非用户明确要求
+# Coding style
+- Grow the system in layers. Start from the smallest version that works end to end, and add each new capability on top of a product that already works.
+- Choose the simplest implementation that fully meets the current requirements. Avoid speculative abstractions, configuration, and indirection.
+- Make architectural decisions for the long term. Do not accept a stopgap that only works for now and is meant to be replaced later.
+- Keep components modular and concerns clearly separated.
+- Do not preserve backward compatibility unless the task or an existing public contract requires it. Remove obsolete paths instead of adding compatibility layers, fallbacks, or migrations.
 
-# Tips
+# TypeScript/JavaScript projects
+- Determine the package manager based on the existing lockfile, if no lockfile exists, use `bun` by default.
+- Do not manually edit `package.json`. Add dependencies using `pnpm add <pkg>` or `bun add <pkg>` or `npm install <pkg>`.
+- For pnpm monorepos, use `pnpm --filter <package_name> add <pkg>`.
+- For bun monorepos, use `bun add <pkg> --filter <package_name>`.
 
-- 需要构建镜像时, 使用 host network
-
-# Git Worktree
-
-- 需要使用git worktree时, 使用目录 `$HOME/worktrees`
+# Environment
+- When using `git worktree`, use the directory `$HOME/worktrees`.
+- Use the host network when building docker images.
