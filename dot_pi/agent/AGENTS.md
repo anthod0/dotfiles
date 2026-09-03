@@ -3,6 +3,7 @@
 - rg (ripgrep)
 - fd
 - jq
+- gh
 
 # Rules
 - Do not proactively reply to issues or submit PRs unless explicitly requested by the user.
