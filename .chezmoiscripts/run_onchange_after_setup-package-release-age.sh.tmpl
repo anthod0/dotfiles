@@ -1,0 +1,55 @@
+#!/bin/bash
+
+# Track availability only: installing/removing tools reruns this script, upgrades do not.
+# npm-installed: {{ if lookPath "npm" }}yes{{ else }}no{{ end }}
+# pnpm-installed: {{ if lookPath "pnpm" }}yes{{ else }}no{{ end }}
+# bun-installed: {{ if lookPath "bun" }}yes{{ else }}no{{ end }}
+
+set -euo pipefail
+
+# Changing this value reruns the script on the next chezmoi apply.
+release_age_days=7
+
+if command -v npm >/dev/null 2>&1; then
+    npm config set min-release-age "$release_age_days" --location=user
+else
+    echo "npm not found. Skipping."
+fi
+
+if command -v pnpm >/dev/null 2>&1; then
+    pnpm config set minimumReleaseAge "$((release_age_days * 24 * 60))" --global
+else
+    echo "pnpm not found. Skipping."
+fi
+
+if command -v bun >/dev/null 2>&1; then
+    # Bun's global config is under XDG_CONFIG_HOME when set, otherwise HOME.
+    # Parsing preserves other settings, but serialization removes TOML comments.
+    bun - "${XDG_CONFIG_HOME:-$HOME}/.bunfig.toml" "$((release_age_days * 24 * 60 * 60))" <<'JS'
+import { mkdir, readFile, writeFile } from "node:fs/promises";
+import { dirname } from "node:path";
+
+const [path, seconds] = process.argv.slice(2);
+let source;
+try {
+    source = await readFile(path, "utf8");
+} catch (error) {
+    if (error.code !== "ENOENT") throw error;
+    source = "";
+}
+const config = Bun.TOML.parse(source);
+config.install ??= {};
+if (typeof config.install !== "object" || Array.isArray(config.install)) {
+    throw new Error(`Expected an [install] table in ${path}`);
+}
+const age = Number(seconds);
+if (config.install.minimumReleaseAge !== age) {
+    config.install.minimumReleaseAge = age;
+    const updated = Bun.TOML.stringify(config);
+    await mkdir(dirname(path), { recursive: true });
+    await writeFile(path, updated, { mode: 0o600 });
+}
+JS
+else
+    echo "bun not found. Skipping."
+fi
