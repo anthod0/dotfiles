@@ -10,6 +10,14 @@
 - Do not take overly destructive actions. Anything that deletes data or modifies shared or production systems still needs explicit user confirmation.
 - Prefer planning over execution. Always break down complex tasks and seek feedback on your roadmap first. Consider confirming the roadmap first to ensure alignment before execution.
 
+# Sub-agents
+
+Use sub-agents only in these situations:
+
+- Code review: delegate the review to independent sub-agents so their findings are not influenced by the main implementation context.
+
+For tasks that can be executed in parallel, prioritize parallel calls to subagents.
+
 # Coding style
 - Grow the system in layers. Start from the smallest version that works end to end, and add each new capability on top of a product that already works.
 - Choose the simplest implementation that fully meets the current requirements. Avoid speculative abstractions, configuration, and indirection.
