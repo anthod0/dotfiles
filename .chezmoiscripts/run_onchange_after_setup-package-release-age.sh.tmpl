@@ -10,7 +10,11 @@ set -euo pipefail
 # Changing this value reruns the script on the next chezmoi apply.
 release_age_days=7
 
+# Maintain the allowlist in .chezmoidata/package-release-age.yaml.
+release_age_excludes='{{ .packageReleaseAge.excludes | toJson }}'
+
 if command -v npm >/dev/null 2>&1; then
+    # npm does not support release-age exclusions; keep the age gate for all packages.
     npm config set min-release-age "$release_age_days" --location=user
 else
     echo "npm not found. Skipping."
@@ -18,6 +22,7 @@ fi
 
 if command -v pnpm >/dev/null 2>&1; then
     pnpm config set minimumReleaseAge "$((release_age_days * 24 * 60))" --global
+    pnpm config set minimumReleaseAgeExclude "$release_age_excludes" --json --global
 else
     echo "pnpm not found. Skipping."
 fi
@@ -25,11 +30,12 @@ fi
 if command -v bun >/dev/null 2>&1; then
     # Bun's global config is under XDG_CONFIG_HOME when set, otherwise HOME.
     # Parsing preserves other settings, but serialization removes TOML comments.
-    bun - "${XDG_CONFIG_HOME:-$HOME}/.bunfig.toml" "$((release_age_days * 24 * 60 * 60))" <<'JS'
+    bun - "${XDG_CONFIG_HOME:-$HOME}/.bunfig.toml" "$((release_age_days * 24 * 60 * 60))" "$release_age_excludes" <<'JS'
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname } from "node:path";
 
-const [path, seconds] = process.argv.slice(2);
+const [path, seconds, excludesJSON] = process.argv.slice(2);
+const excludes = JSON.parse(excludesJSON);
 let source;
 try {
     source = await readFile(path, "utf8");
@@ -43,8 +49,10 @@ if (typeof config.install !== "object" || Array.isArray(config.install)) {
     throw new Error(`Expected an [install] table in ${path}`);
 }
 const age = Number(seconds);
-if (config.install.minimumReleaseAge !== age) {
+if (config.install.minimumReleaseAge !== age ||
+    JSON.stringify(config.install.minimumReleaseAgeExcludes) !== JSON.stringify(excludes)) {
     config.install.minimumReleaseAge = age;
+    config.install.minimumReleaseAgeExcludes = excludes;
     const updated = Bun.TOML.stringify(config);
     await mkdir(dirname(path), { recursive: true });
     await writeFile(path, updated, { mode: 0o600 });

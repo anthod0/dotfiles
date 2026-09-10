@@ -1,0 +1,6 @@
+packageReleaseAge:
+  # Packages/patterns exempt from the release-age gate in pnpm and Bun.
+  excludes:
+    - '@pi-lab/*'
+    - '@openai/codex'
+    - '@earendil-works/pi-coding-agent'
