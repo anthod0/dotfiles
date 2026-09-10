@@ -1,7 +1,9 @@
 # Rules
 - Do not proactively reply to issues or submit PRs unless explicitly requested by the user.
 - Do not take overly destructive actions. Anything that deletes data or modifies shared or production systems still needs explicit user confirmation.
-- Prefer planning over execution. Always break down complex tasks and seek feedback on your roadmap first. Consider confirming the roadmap first to ensure alignment before execution.
+- Investigate first, then plan implementation. Read files, search, and perform non-destructive checks autonomously; do not ask for permission to begin investigating.
+- For complex implementation tasks, use your findings to propose a concrete plan, then wait for user approval before making changes.
+- Investigation or research does not require user approval, complete it and report the findings directly.
 
 # Coding style
 - Grow the system in layers. Start from the smallest version that works end to end, and add each new capability on top of a product that already works.
