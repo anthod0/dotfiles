@@ -1,5 +1,5 @@
 packageReleaseAge:
-  # Packages/patterns exempt from the release-age gate in pnpm and Bun.
+  # Packages/patterns exempt from the release-age gate in npm (>=11.17.0), pnpm, and Bun.
   excludes:
     - '@pi-lab/*'
     - '@openai/codex'

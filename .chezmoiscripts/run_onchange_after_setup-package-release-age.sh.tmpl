@@ -14,8 +14,29 @@ release_age_days=7
 release_age_excludes='{{ .packageReleaseAge.excludes | toJson }}'
 
 if command -v npm >/dev/null 2>&1; then
-    # npm does not support release-age exclusions; keep the age gate for all packages.
     npm config set min-release-age "$release_age_days" --location=user
+    # Requires npm >=11.17.0. Write array entries directly: config set accepts scalars.
+    node - "$(npm config get userconfig)" "$release_age_excludes" <<'JS'
+const { readFile, writeFile } = require("node:fs/promises");
+
+(async () => {
+    const [path, excludesJSON] = process.argv.slice(2);
+    const excludes = JSON.parse(excludesJSON);
+    // npm config set above creates the user config file if needed.
+    const source = await readFile(path, "utf8");
+    const lines = source.split(/\r?\n/).filter(line =>
+        !/^\s*min-release-age-exclude(?:\[\])?\s*=/.test(line));
+    while (lines.at(-1) === "") lines.pop();
+    for (const name of excludes) {
+        lines.push(`min-release-age-exclude[]=${JSON.stringify(name)}`);
+    }
+    const updated = lines.join("\n") + "\n";
+    if (updated !== source) await writeFile(path, updated, { mode: 0o600 });
+})().catch(error => {
+    console.error(error);
+    process.exitCode = 1;
+});
+JS
 else
     echo "npm not found. Skipping."
 fi
