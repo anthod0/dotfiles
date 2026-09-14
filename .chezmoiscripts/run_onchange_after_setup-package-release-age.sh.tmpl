@@ -8,13 +8,13 @@
 set -euo pipefail
 
 # Changing this value reruns the script on the next chezmoi apply.
-release_age_days=7
+release_age_hours=72
 
 # Maintain the allowlist in .chezmoidata/package-release-age.yaml.
 release_age_excludes='{{ .packageReleaseAge.excludes | toJson }}'
 
 if command -v npm >/dev/null 2>&1; then
-    npm config set min-release-age "$release_age_days" --location=user
+    npm config set min-release-age "$((release_age_hours / 24))" --location=user
     # Requires npm >=11.17.0. Write array entries directly: config set accepts scalars.
     node - "$(npm config get userconfig)" "$release_age_excludes" <<'JS'
 const { readFile, writeFile } = require("node:fs/promises");
@@ -42,7 +42,7 @@ else
 fi
 
 if command -v pnpm >/dev/null 2>&1; then
-    pnpm config set minimumReleaseAge "$((release_age_days * 24 * 60))" --global
+    pnpm config set minimumReleaseAge "$((release_age_hours * 60))" --global
     pnpm config set minimumReleaseAgeExclude "$release_age_excludes" --json --global
 else
     echo "pnpm not found. Skipping."
@@ -51,7 +51,7 @@ fi
 if command -v bun >/dev/null 2>&1; then
     # Bun's global config is under XDG_CONFIG_HOME when set, otherwise HOME.
     # Parsing preserves other settings, but serialization removes TOML comments.
-    bun - "${XDG_CONFIG_HOME:-$HOME}/.bunfig.toml" "$((release_age_days * 24 * 60 * 60))" "$release_age_excludes" <<'JS'
+    bun - "${XDG_CONFIG_HOME:-$HOME}/.bunfig.toml" "$((release_age_hours * 60 * 60))" "$release_age_excludes" <<'JS'
 import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname } from "node:path";
 
