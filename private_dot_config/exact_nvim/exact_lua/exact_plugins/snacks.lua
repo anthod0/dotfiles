@@ -65,7 +65,8 @@ return {
         keys = {
           { icon = " ", key = "f", desc = "Find File", action = ":lua Snacks.dashboard.pick('files')" },
           { icon = " ", key = "g", desc = "Find Text", action = ":lua Snacks.dashboard.pick('live_grep')" },
-          { icon = " ", key = "r", desc = "Recent Files", action = ":lua Snacks.dashboard.pick('oldfiles')" },
+          { icon = " ", key = "i", desc = "Issues", action = ":lua Snacks.picker.gh_issue()" },
+          { icon = " ", key = "p", desc = "Pull Requests", action = ":lua Snacks.picker.gh_pr()" },
           {
             icon = " ",
             key = "c",
@@ -83,8 +84,32 @@ return {
           section = "header",
         },
         { section = "keys", gap = 1, padding = 1 },
-        { icon = " ", title = "Recent Files", section = "recent_files", padding = { 1, 1 }, indent = 1 },
-        { icon = " ", title = "Projects", section = "projects", padding = { 1, 1 }, indent = 1 },
+        {
+          icon = " ",
+          title = "Open Issues",
+          section = "terminal",
+          cmd = "gh issue list --limit 5",
+          enabled = function()
+            return Snacks.git.get_root() ~= nil
+          end,
+          height = 7,
+          ttl = 300,
+          padding = { 1, 1 },
+          indent = 1,
+        },
+        {
+          icon = " ",
+          title = "Open PRs",
+          section = "terminal",
+          cmd = "gh pr list --limit 5",
+          enabled = function()
+            return Snacks.git.get_root() ~= nil
+          end,
+          height = 7,
+          ttl = 300,
+          padding = { 1, 1 },
+          indent = 1,
+        },
       },
     },
   },
