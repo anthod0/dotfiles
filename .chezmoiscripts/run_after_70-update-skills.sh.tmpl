@@ -1,0 +1,33 @@
+{{- $repoURL := "https://github.com/anthod0/skills.git" -}}
+#!/bin/bash
+
+set -euo pipefail
+
+if ! command -v git >/dev/null 2>&1; then
+    echo "git is required to manage skills." >&2
+    exit 1
+fi
+
+repo_url={{ $repoURL | quote }}
+repo_dir=$HOME/.local/share/agent-skills
+skills_dir=$HOME/.agents/skills
+
+if [[ -L $skills_dir ]]; then
+    if [[ ! -d $repo_dir/.git || ! -d $skills_dir || ! $skills_dir -ef $repo_dir/skills ]]; then
+        echo "$skills_dir is not a valid link to $repo_dir/skills; refusing to update." >&2
+        exit 1
+    fi
+    git -C "$repo_dir" pull --ff-only
+elif [[ -e $skills_dir ]]; then
+    echo "$skills_dir already exists and is not a symlink; refusing to overwrite it." >&2
+    exit 1
+else
+    if [[ -e $repo_dir || -L $repo_dir ]]; then
+        echo "$repo_dir already exists without the skills link; refusing to overwrite it." >&2
+        exit 1
+    fi
+    mkdir -p "$(dirname "$repo_dir")" "$(dirname "$skills_dir")"
+    git clone --filter=blob:none --sparse "$repo_url" "$repo_dir"
+    git -C "$repo_dir" sparse-checkout set skills
+    ln -sT "$repo_dir/skills" "$skills_dir"
+fi
