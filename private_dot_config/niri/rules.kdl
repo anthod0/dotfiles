@@ -1,0 +1,87 @@
+// Put Noctalia's blurred wallpaper copy into niri's overview backdrop.
+layer-rule {
+    match namespace="^noctalia-backdrop"
+    place-within-backdrop true
+}
+
+// Window rules let you adjust behavior for individual windows.
+// Find more information on the wiki:
+// https://niri-wm.github.io/niri/Configuration:-Window-Rules
+
+// Keep the focus ring outside semitransparent windows. Otherwise its solid
+// Noctalia accent color is drawn behind the window and tints the background.
+window-rule {
+    draw-border-with-background false
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+
+// Open Noctalia's settings window as a tiled half-width column.
+window-rule {
+    match app-id="dev.noctalia.Noctalia"
+    open-floating false
+    default-column-width { proportion 0.5; }
+    background-effect {
+        blur true
+    }
+}
+
+// Blur Kitty's native semitransparent background.
+window-rule {
+    match app-id="^kitty$"
+    default-column-width { proportion 0.66667; }
+    background-effect {
+        blur true
+    }
+}
+
+// Work around WezTerm's initial configure bug
+// by setting an empty default-column-width.
+window-rule {
+    // This regular expression is intentionally made as specific as possible,
+    // since this is the default config, and we want no false positives.
+    // You can get away with just app-id="wezterm" if you want.
+    match app-id=r#"^org\.wezfurlong\.wezterm$"#
+    default-column-width {}
+}
+
+// Open Chromium at the full available screen width.
+window-rule {
+    match app-id=r#"(?i)(^|\.)(chromium|chromium-browser)$"#
+    default-column-width { proportion 1.0; }
+}
+
+// Open Firefox at the full available screen width.
+window-rule {
+    match app-id=r#"firefox$"#
+    default-column-width { proportion 1.0; }
+}
+
+// Open the Firefox picture-in-picture player as floating by default.
+window-rule {
+    // This app-id regular expression will work for both:
+    // - host Firefox (app-id is "firefox")
+    // - Flatpak Firefox (app-id is "org.mozilla.firefox")
+    match app-id=r#"firefox$"# title="^Picture-in-Picture$"
+    open-floating true
+}
+
+// Example: block out two password managers from screen capture.
+// (This example rule is commented out with a "/-" in front.)
+/-window-rule {
+    match app-id=r#"^org\.keepassxc\.KeePassXC$"#
+    match app-id=r#"^org\.gnome\.World\.Secrets$"#
+
+    block-out-from "screen-capture"
+
+    // Use this instead if you want them visible on third-party screenshot tools.
+    // block-out-from "screencast"
+}
+
+// Example: enable rounded corners for all windows.
+// (This example rule is commented out with a "/-" in front.)
+/-window-rule {
+    geometry-corner-radius 12
+    clip-to-geometry true
+}
+
