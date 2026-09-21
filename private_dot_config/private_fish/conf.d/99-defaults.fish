@@ -17,6 +17,8 @@ if status is-interactive
     abbr -a c clear
     abbr -a .. 'cd ..'
     abbr -a lg lazygit
+    abbr -a co codex
+    abbr -a gr grok
 
     # starship
     starship init fish | source
