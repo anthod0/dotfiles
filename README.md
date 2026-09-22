@@ -21,6 +21,7 @@ My personal development environment configuration, managed with [chezmoi](https:
 - Arch Linux or Fedora
 - `chezmoi`
 - `git`
+- Bun (installed automatically on Arch; install it separately on Fedora)
 
 ### Installation
 
