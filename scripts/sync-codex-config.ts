@@ -7,6 +7,7 @@ const rootSettings = {
   approval_policy: "never",
 };
 const tuiSettings = {
+  animations: false,
   terminal_title: [],
   status_line: [
     "model-with-reasoning",
@@ -23,8 +24,13 @@ export function sync(source: string): string {
   if (typeof tui !== "object" || Array.isArray(tui)) {
     throw new Error("Expected a [tui] table in Codex config");
   }
+  const features = (config.features ??= {});
+  if (typeof features !== "object" || Array.isArray(features)) {
+    throw new Error("Expected a [features] table in Codex config");
+  }
   Object.assign(config, rootSettings);
   Object.assign(tui, tuiSettings);
+  Object.assign(features, { worktrees: false });
   const updated = Bun.TOML.stringify(config);
   if (updated === undefined)
     throw new Error("Could not serialize Codex config");
