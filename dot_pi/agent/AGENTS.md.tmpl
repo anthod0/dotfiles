@@ -1,0 +1,15 @@
+{{ template "AGENTS.md" . }}
+# Available CLI Tools
+
+- rg (ripgrep)
+- fd
+- jq
+- gh
+
+# Sub-agents
+
+Use sub-agents only in these situations:
+
+- Code review: delegate the review to independent sub-agents so their findings are not influenced by the main implementation context.
+
+For tasks that can be executed in parallel, prioritize parallel calls to subagents.

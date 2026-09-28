@@ -35,9 +35,11 @@ See the [chezmoi quick start guide](https://www.chezmoi.io/quick-start/) for ins
 ├── .chezmoiscripts/       # System setup and configuration scripts
 │   ├── arch/              # Arch Linux-specific scripts
 │   └── fedora/            # Fedora-specific scripts
+├── .chezmoitemplates/     # Shared AGENTS.md content
 ├── dot_local/bin/         # User-level commands
-├── dot_pi/                # Pi AGENTS.md
+├── dot_pi/                # Pi AGENTS.md with Pi-specific additions
 ├── dot_codex/             # Codex AGENTS.md
+├── dot_grok/              # Grok AGENTS.md
 ├── dot_tmux.conf          # Main tmux configuration
 └── private_dot_config/    # Application configuration under ~/.config
     ├── exact_nvim/        # Neovim / LazyVim

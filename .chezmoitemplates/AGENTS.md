@@ -1,24 +1,9 @@
-# Available CLI Tools
-
-- rg (ripgrep)
-- fd
-- jq
-- gh
-
 # Rules
 - Do not proactively reply to issues or submit PRs unless explicitly requested by the user.
 - Do not take overly destructive actions. Anything that deletes data or modifies shared or production systems still needs explicit user confirmation.
 - Investigate first, then plan implementation. Read files, search, and perform non-destructive checks autonomously; do not ask for permission to begin investigating.
 - Investigation or research does not require user approval, complete it and report the findings directly.
-- Before implementation, declare the scope and confirm with the user.
-
-# Sub-agents
-
-Use sub-agents only in these situations:
-
-- Code review: delegate the review to independent sub-agents so their findings are not influenced by the main implementation context.
-
-For tasks that can be executed in parallel, prioritize parallel calls to subagents.
+- Before implementation, declare the scope and confirm with the user. Documentation-only changes may be implemented directly without confirmation.
 
 # Coding style
 - Grow the system in layers. Start from the smallest version that works end to end, and add each new capability on top of a product that already works.
