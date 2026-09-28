@@ -1,5 +1,7 @@
 #!/bin/sh
 set -eu
 
+# Re-run when the Codex sync script changes: {{ include "scripts/sync-codex-config.ts" | sha256sum }}
+
 command -v bun >/dev/null 2>&1 || { echo "bun is required to sync Codex config." >&2; exit 1; }
 exec bun {{ joinPath .chezmoi.sourceDir "scripts/sync-codex-config.ts" | shellQuote }}

@@ -9,8 +9,8 @@
 - Do not proactively reply to issues or submit PRs unless explicitly requested by the user.
 - Do not take overly destructive actions. Anything that deletes data or modifies shared or production systems still needs explicit user confirmation.
 - Investigate first, then plan implementation. Read files, search, and perform non-destructive checks autonomously; do not ask for permission to begin investigating.
-- For complex implementation tasks, use your findings to propose a concrete plan, then wait for user approval before making changes.
 - Investigation or research does not require user approval, complete it and report the findings directly.
+- Before implementation, declare the scope and confirm with the user.
 
 # Sub-agents
 
