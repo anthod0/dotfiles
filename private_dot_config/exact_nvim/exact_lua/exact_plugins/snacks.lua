@@ -30,6 +30,26 @@ return {
                 picker.list:update()
               end
             end,
+            explorer_paste = function(picker)
+              local files = vim.split(vim.fn.getreg(vim.v.register or "+") or "", "\n", { plain = true })
+              files = vim.tbl_filter(function(file)
+                return file ~= "" and vim.uv.fs_stat(file) ~= nil
+              end, files)
+
+              if #files == 0 then
+                return Snacks.notify.warn(
+                  ("The `%s` register does not contain any files or directories"):format(vim.v.register or "+")
+                )
+              end
+
+              local dir = picker:dir()
+              Snacks.picker.util.copy(files, dir)
+
+              local Tree = require("snacks.explorer.tree")
+              Tree:refresh(dir)
+              Tree:open(dir)
+              picker:update({ target = dir })
+            end,
           },
           win = {
             list = {
