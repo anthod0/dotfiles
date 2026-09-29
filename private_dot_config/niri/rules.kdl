@@ -45,6 +45,18 @@ window-rule {
     default-column-width {}
 }
 
+// Open Collabora Office at two-thirds of the available screen width.
+window-rule {
+    match app-id="^coda-qt$"
+    default-column-width { proportion 0.66667; }
+}
+
+// Open Apostrophe at two-thirds of the available screen width.
+window-rule {
+    match app-id=r#"^org\.gnome\.gitlab\.somas\.Apostrophe$"#
+    default-column-width { proportion 0.66667; }
+}
+
 // Open Chromium at the full available screen width.
 window-rule {
     match app-id=r#"(?i)(^|\.)(chromium|chromium-browser)$"#
