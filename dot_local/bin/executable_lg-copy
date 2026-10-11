@@ -1,19 +1,15 @@
 #!/bin/sh
 
 # Use the local desktop clipboard when possible. Over SSH, send OSC 52 to the
-# connecting terminal instead. Inside tmux, OSC 52 also targets the active tmux
-# client, whereas display environment variables may belong to an older session.
+# connecting terminal instead. Inside tmux, let tmux update the client clipboard;
+# display environment variables may belong to an older session.
 if [ "$#" -ne 0 ]; then
     printf 'Usage: lg-copy\n' >&2
     exit 2
 fi
 
 if [ -n "${TMUX:-}" ]; then
-    {
-        printf '\033Ptmux;\033\033]52;c;'
-        base64 | tr -d '\n'
-        printf '\a\033\\'
-    } > /dev/tty
+    exec tmux load-buffer -w -
 elif [ -n "${SSH_CONNECTION:-}${SSH_TTY:-}" ]; then
     {
         printf '\033]52;c;'
