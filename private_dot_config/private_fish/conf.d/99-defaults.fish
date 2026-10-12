@@ -19,6 +19,8 @@ if status is-interactive
     abbr -a lg lazygit
     abbr -a co codex
     abbr -a gr grok
+    abbr -a gp git push
+    abbr -a gpl git pull
 
     # starship
     starship init fish | source
