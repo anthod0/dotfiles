@@ -3,7 +3,6 @@
 - Do not take overly destructive actions. Anything that deletes data or modifies shared or production systems still needs explicit user confirmation.
 - Investigate first, then plan implementation. Read files, search, and perform non-destructive checks autonomously; do not ask for permission to begin investigating.
 - Investigation or research does not require user approval, complete it and report the findings directly.
-- Before implementation, declare the scope and confirm with the user. Documentation-only changes may be implemented directly without confirmation.
 
 # Coding style
 - Grow the system in layers. Start from the smallest version that works end to end, and add each new capability on top of a product that already works.
