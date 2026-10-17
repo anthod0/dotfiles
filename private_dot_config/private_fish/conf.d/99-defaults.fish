@@ -19,6 +19,7 @@ if status is-interactive
     abbr -a lg lazygit
     abbr -a co codex
     abbr -a gr grok
+    abbr -a kr 'kiro-cli chat -a'
     abbr -a gp git push
     abbr -a gpl git pull
 
