@@ -10,6 +10,7 @@
 - Make architectural decisions for the long term. Do not accept a stopgap that only works for now and is meant to be replaced later.
 - Keep components modular and concerns clearly separated.
 - Do not preserve backward compatibility unless the task or an existing public contract requires it. Remove obsolete paths instead of adding compatibility layers, fallbacks, or migrations.
+- Understand the business workflow. Do not add defensive code for edge cases that cannot occur in practice. Do not silently expand scope for theoretical robustness.
 
 # TypeScript/JavaScript projects
 - Determine the package manager based on the existing lockfile, if no lockfile exists, use `bun` by default.
