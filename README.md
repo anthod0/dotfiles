@@ -2,6 +2,8 @@
 
 My personal development environment configuration, managed with [chezmoi](https://www.chezmoi.io/). Supports **Arch Linux** and **Fedora**.
 
+![Starship prompt and tmux split panes with a Gruvbox palette](assets/terminal.png)
+
 ## What's Included
 
 - **Shell**: Fish, Starship, Zoxide, and commonly used aliases and abbreviations
