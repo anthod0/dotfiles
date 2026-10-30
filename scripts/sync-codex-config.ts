@@ -7,6 +7,7 @@ const rootSettings = {
   approval_policy: "never",
 };
 const tuiSettings = {
+  alternate_screen: "never",
   animations: false,
   terminal_title: [],
   status_line: [
