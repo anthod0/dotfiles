@@ -5,3 +5,4 @@ packageReleaseAge:
     - '@pontia/*'
     - '@openai/codex'
     - '@earendil-works/pi-coding-agent'
+    - '@koalaauto/agentchannel'
