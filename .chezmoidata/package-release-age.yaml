@@ -1,8 +1,25 @@
 packageReleaseAge:
-  # Packages/patterns exempt from the release-age gate in npm (>=11.17.0), pnpm, and Bun.
+  # Exact package names exempt from the release-age gate in npm (>=11.17.0), pnpm, and Bun.
   excludes:
-    - '@pi-lab/*'
-    - '@pontia/*'
+    - '@pi-lab/codex-image'
+    - '@pi-lab/env'
+    - '@pi-lab/grok-build'
+    - '@pi-lab/input-history'
+    - '@pi-lab/notify'
+    - '@pi-lab/openai'
+    - '@pi-lab/permissions'
+    - '@pi-lab/ssm-env'
+    - '@pi-lab/subagent'
+    - '@pi-lab/webfetch'
+    - '@pi-lab/websearch'
+    - '@pi-lab/xsearch'
+    - '@pontia/claude-client'
+    - '@pontia/cli'
+    - '@pontia/cli-darwin-arm64'
+    - '@pontia/cli-darwin-x64'
+    - '@pontia/cli-linux-arm64'
+    - '@pontia/cli-linux-x64'
+    - '@pontia/pi-client-plugin'
     - '@openai/codex'
     - '@earendil-works/pi-coding-agent'
     - '@koalaauto/agentchannel'
