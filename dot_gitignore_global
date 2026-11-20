@@ -4,3 +4,5 @@
 .fdignore
 /TODO.md
 /docs/product-intel/
+/docs/agents/decisions.tsv
+/docs/agents/mistakes.md
